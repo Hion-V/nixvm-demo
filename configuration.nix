@@ -15,7 +15,7 @@
   boot.loader.grub.device = "/dev/vda";
   boot.loader.grub.useOSProber = true;
 
-  networking.hostName = "nixvm1"; # Define your hostname.
+  networking.hostName = "nixvm2"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -47,8 +47,12 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.displayManager.gdm.enable = false;
+  services.xserver.desktopManager.gnome.enable = false;
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.displayManager.sddm.wayland.enable = true;
+  services.xserver.desktopManager.plasma6.enable = true;
+  
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -102,6 +106,25 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
+    git
+    # KDE Utilities
+  kdePackages.discover # Optional: Software center for Flatpaks/firmware updates
+  kdePackages.kcalc # Calculator
+  kdePackages.kcharselect # Character map
+  kdePackages.kclock # Clock app
+  kdePackages.kcolorchooser # Color picker
+  kdePackages.kolourpaint # Simple paint program
+  kdePackages.ksystemlog # System log viewer
+  kdePackages.sddm-kcm # SDDM configuration module
+  kdiff3 # File/directory comparison tool
+  
+  # Hardware/System Utilities (Optional)
+  kdePackages.isoimagewriter # Write hybrid ISOs to USB
+  kdePackages.partitionmanager # Disk and partition management
+  hardinfo2 # System benchmarks and hardware info
+  wayland-utils # Wayland diagnostic tools
+  wl-clipboard # Wayland copy/paste support
+  vlc # Media player
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
